@@ -8,6 +8,7 @@
 	let login = false;
 	let key = 'ietscc2024';
 	let loginModal = false;
+	let terminateModal = false;
 
 	// Function to submit the form
 	function submitForm() {
@@ -227,40 +228,38 @@ ${item.answer}\n`;
 
 	<!-- Conditional display based on showQuestions and showSummary -->
 	{#if showQuestions}
-		<p>
-			Questions are displayed. Time remaining: {Math.floor(timeRemaining / 60)} minutes and {timeRemaining %
-				60} seconds.
-		</p>
-		<div class="container">
-			<h1 class="mb-4 text-2xl font-bold">Coding Challenge</h1>
-
-			<!-- Display current problem statement -->
-			<p class="mb-4">{currentQuestion}</p>
-
-			<!-- Input box for user's answer -->
-			<input
+		<Card class="min-w-full">
+			<Textarea
 				id="answer-input"
-				type="text"
-				placeholder="Type your solution here"
-				class="mb-4 w-full rounded border p-2"
+				placeholder="Your answer"
+				rows="16"
 				bind:value={answers[currentIndex]}
-			/>
-
-			<!-- Button to go to the next problem statement -->
-			<button
-				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-				on:click={nextQuestion}
 			>
-				Next
-			</button>
-			<!-- Button to terminate -->
-			<button
-				class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-				on:click={terminateProgram}
-			>
-				Terminate
-			</button>
-		</div>
+				<Toolbar slot="header" embedded>
+					<ToolbarGroup>
+						<ToolbarButton name="Attach file" class="font-bold">Question</ToolbarButton>
+					</ToolbarGroup>
+					<ToolbarGroup>
+						<ToolbarButton name="Attach file" class="font-bold" color="blue"
+							>{currentQuestion}</ToolbarButton
+						>
+					</ToolbarGroup>
+					<ToolbarButton name="send" slot="end" class="min-w-fit font-bold" color="red">
+						Time Remaining: {Math.floor(timeRemaining / 60)} minutes {timeRemaining % 60} seconds
+					</ToolbarButton>
+				</Toolbar>
+				<div slot="footer" class="flex items-center justify-between p-2">
+					<Button class="w-64" on:click={nextQuestion}>Next Question</Button>
+					<Button
+						class="w-64"
+						color="red"
+						on:click={() => {
+							terminateModal = true;
+						}}>End Competition</Button
+					>
+				</div>
+			</Textarea>
+		</Card>
 	{/if}
 
 	{#if showSummary}
@@ -292,10 +291,13 @@ ${item.answer}\n`;
 	</svelte:fragment>
 </Modal>
 
-<style>
-	.container {
-		max-width: 600px;
-		margin: 0 auto;
-		padding: 20px;
-	}
-</style>
+<!-- Modal to terminate program -->
+<Modal title="End Competition" bind:open={terminateModal} autoclose>
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+		Are you sure you want to end the competition?
+	</p>
+	<svelte:fragment slot="footer">
+		<Button on:click={terminateProgram}>End Competition</Button>
+		<Button color="alternative">Cancel</Button>
+	</svelte:fragment>
+</Modal>
