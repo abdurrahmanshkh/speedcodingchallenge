@@ -1,5 +1,6 @@
 <script>
 	import { Button, Card, Input, Label, Li, List, Modal, P } from 'flowbite-svelte';
+	import { Textarea, Toolbar, ToolbarGroup, ToolbarButton } from 'flowbite-svelte';
 
 	let name = '';
 	let phone = '';
