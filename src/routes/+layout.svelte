@@ -4,7 +4,7 @@
 	import { Footer, FooterCopyright } from 'flowbite-svelte';
 </script>
 
-<Navbar class="border-2 p-4">
+<Navbar class="border-2 border-indigo-800 bg-indigo-300 p-4">
 	<div>
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			IET-KJSIT
@@ -21,6 +21,6 @@
 	<slot></slot>
 </main>
 
-<Footer class="border-2 p-4">
+<Footer class="border-2 border-indigo-800 bg-indigo-300 p-4">
 	<FooterCopyright by="created by Abdur Rehman Shaikh." />
 </Footer>

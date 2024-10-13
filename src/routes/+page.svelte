@@ -146,7 +146,7 @@ ${item.answer}\n`;
 	<!-- Button to trigger the function -->
 	{#if !login}
 		<div class="grid grid-cols-3 gap-8">
-			<Card class="align-center h-full min-w-full justify-center">
+			<Card class="align-center h-full min-w-full justify-center bg-blue-100 bg-opacity-90">
 				<form class="flex flex-col space-y-6" on:submit|preventDefault={submitForm}>
 					<h3 class="text-2xl font-bold text-gray-900 dark:text-white">
 						Sign in to start the competition
@@ -170,7 +170,7 @@ ${item.answer}\n`;
 					<Button type="submit" class="w-full">Login and Start</Button>
 				</form>
 			</Card>
-			<Card class="col-span-2 min-w-full">
+			<Card class="col-span-2 min-w-full bg-gray-100 bg-opacity-90">
 				<P class="mb-4 text-2xl font-bold">Speed Coding Challenge - Event Rules</P>
 
 				<P class="text-xl font-bold">Participation</P>
