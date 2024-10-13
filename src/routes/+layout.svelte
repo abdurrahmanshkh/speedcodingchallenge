@@ -12,7 +12,7 @@
 	</div>
 	<div>
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			Code Reverse Engineering
+			Speed Coding Challenge
 		</span>
 	</div>
 </Navbar>
