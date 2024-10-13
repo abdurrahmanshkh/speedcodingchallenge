@@ -54,32 +54,93 @@
 			answers[currentIndex] = input.value; // Save answer to the respective index
 		}
 	}
+
+	let showQuestions = false;
+	let showSummary = false;
+	let timeRemaining = 0; // time remaining in seconds
+	let interval; // interval for tracking remaining time
+	let timer; // timeout for 30-minute timer
+
+	// Function to trigger showing questions and start the timer
+	function triggerShowQuestions() {
+		showQuestions = true;
+		showSummary = false;
+		timeRemaining = 30 * 60; // 30 minutes in seconds
+
+		// Clear any existing interval/timer to avoid multiple instances
+		clearInterval(interval);
+		clearTimeout(timer);
+
+		// Start interval to count down the remaining time
+		interval = setInterval(() => {
+			timeRemaining--;
+			if (timeRemaining <= 0) {
+				clearInterval(interval);
+			}
+		}, 1000);
+
+		// Set a timeout to hide questions and show summary after 30 minutes
+		timer = setTimeout(
+			() => {
+				showQuestions = false;
+				showSummary = true;
+			},
+			30 * 60 * 1000
+		); // 30 minutes in milliseconds
+	}
+
+	//function to terminate program and show summary before timeout
+	function terminateProgram() {
+		showQuestions = false;
+		showSummary = true;
+	}
 </script>
 
 <main>
-	<div class="container">
-		<h1 class="mb-4 text-2xl font-bold">Coding Challenge</h1>
+	<!-- Button to trigger the function -->
+	<button on:click={triggerShowQuestions}>Start Quiz</button>
 
-		<!-- Display current problem statement -->
-		<p class="mb-4">{currentQuestion}</p>
+	<!-- Conditional display based on showQuestions and showSummary -->
+	{#if showQuestions}
+		<p>
+			Questions are displayed. Time remaining: {Math.floor(timeRemaining / 60)} minutes and {timeRemaining %
+				60} seconds.
+		</p>
+		<div class="container">
+			<h1 class="mb-4 text-2xl font-bold">Coding Challenge</h1>
 
-		<!-- Input box for user's answer -->
-		<input
-			id="answer-input"
-			type="text"
-			placeholder="Type your solution here"
-			class="mb-4 w-full rounded border p-2"
-			bind:value={answers[currentIndex]}
-		/>
+			<!-- Display current problem statement -->
+			<p class="mb-4">{currentQuestion}</p>
 
-		<!-- Button to go to the next problem statement -->
-		<button
-			class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-			on:click={nextQuestion}
-		>
-			Next
-		</button>
-	</div>
+			<!-- Input box for user's answer -->
+			<input
+				id="answer-input"
+				type="text"
+				placeholder="Type your solution here"
+				class="mb-4 w-full rounded border p-2"
+				bind:value={answers[currentIndex]}
+			/>
+
+			<!-- Button to go to the next problem statement -->
+			<button
+				class="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+				on:click={nextQuestion}
+			>
+				Next
+			</button>
+			<!-- Button to terminate -->
+			<button
+				class="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+				on:click={terminateProgram}
+			>
+				Terminate
+			</button>
+		</div>
+	{/if}
+
+	{#if showSummary}
+		<p>The summary is displayed.</p>
+	{/if}
 </main>
 
 <style>
