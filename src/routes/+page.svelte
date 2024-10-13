@@ -1,4 +1,21 @@
 <script>
+	import { Button, Card, Input, Label, Li, List, Modal, P } from 'flowbite-svelte';
+
+	let name = '';
+	let phone = '';
+	let email = '';
+	let password = '';
+	let login = false;
+	let key = 'ietscc2024';
+	let loginModal = false;
+
+	// Function to submit the form
+	function submitForm() {
+		if (password == key) {
+			loginModal = true;
+		}
+	}
+
 	// Problem statements array
 	let questions = [
 		'(4 points) Write a function to count the number of vowels in a given string.',
@@ -63,6 +80,7 @@
 
 	// Function to trigger showing questions and start the timer
 	function triggerShowQuestions() {
+		login = true;
 		showQuestions = true;
 		showSummary = false;
 		timeRemaining = 30 * 60; // 30 minutes in seconds
@@ -111,11 +129,101 @@
 		}
 		return summary;
 	}
+
+	function downloadSummaryAsTxt() {
+		let summaryText = `Summary
+
+Participant Details:
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+    `;
+
+		//add questions and answers
+		generateSummary().forEach((item, index) => {
+			summaryText += `
+Question ${index + 1}: ${item.question}
+Answer:
+${item.answer}\n`;
+		});
+
+		// Create a blob and download the text file
+		const blob = new Blob([summaryText], { type: 'text/plain' });
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob);
+		link.download = `${name} - ${phone}.txt`;
+
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
 </script>
 
 <main>
 	<!-- Button to trigger the function -->
-	<button on:click={triggerShowQuestions}>Start Quiz</button>
+	{#if !login}
+		<div class="grid grid-cols-3 gap-8">
+			<Card class="align-center h-full min-w-full justify-center">
+				<form class="flex flex-col space-y-6" on:submit|preventDefault={submitForm}>
+					<h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+						Sign in to start the competition
+					</h3>
+					<Label class="space-y-2">
+						<span>Full Name</span>
+						<Input type="text" placeholder="Name" required bind:value={name} />
+					</Label>
+					<Label class="space-y-2">
+						<span>Phone Number</span>
+						<Input type="text" placeholder="9876543210" required bind:value={phone} />
+					</Label>
+					<Label class="space-y-2">
+						<span>Email</span>
+						<Input type="email" placeholder="name@company.com" required bind:value={email} />
+					</Label>
+					<Label class="space-y-2">
+						<span>Your password</span>
+						<Input type="password" placeholder="•••••" required bind:value={password} />
+					</Label>
+					<Button type="submit" class="w-full">Login and Start</Button>
+				</form>
+			</Card>
+			<Card class="col-span-2 min-w-full">
+				<P class="mb-4 text-2xl font-bold">Code Reverse Engineering - Event Rules</P>
+				<P class="text-xl font-bold">Participation</P>
+				<List class="mb-4">
+					<Li>Login with your registered details before the event starts.</Li>
+					<Li>Ensure accurate login information to avoid disqualification.</Li>
+				</List>
+
+				<P class="text-xl font-bold">Event Structure</P>
+				<List class="mb-4">
+					<Li>3 rounds with increasing difficulty.</Li>
+					<Li>Code snippets available in Python and Java.</Li>
+					<Li>Identify the algorithm or function within the time limit.</Li>
+				</List>
+
+				<P class="text-xl font-bold">Time Limits</P>
+				<List class="mb-4">
+					<Li><strong>Round 1:</strong> 10 minutes</Li>
+					<Li><strong>Round 2:</strong> 15 minutes</Li>
+					<Li><strong>Round 3:</strong> 20 minutes</Li>
+				</List>
+
+				<P class="text-xl font-bold">Submission</P>
+				<List class="mb-4">
+					<Li>Enter your answer in the input box before time runs out.</Li>
+					<Li>Proceed to the next round only if you submit a correct answer.</Li>
+					<Li>No skipping rounds; incomplete submissions result in elimination.</Li>
+				</List>
+
+				<P class="text-xl font-bold">Winner Announcement</P>
+				<List class="">
+					<Li>Winners will be announced at the end of the event.</Li>
+					<Li>Organizer decisions are final.</Li>
+				</List>
+			</Card>
+		</div>
+	{/if}
 
 	<!-- Conditional display based on showQuestions and showSummary -->
 	{#if showQuestions}
@@ -156,20 +264,33 @@
 	{/if}
 
 	{#if showSummary}
-		<h2 class="mt-4 text-xl font-bold">Summary</h2>
-		<p>Time Taken: {30 - Math.floor(timeRemaining / 60)} minutes</p>
-		<ul>
-			{#each generateSummary() as item}
-				<li>
-					<strong>Question:</strong>
-					{item.question} <br />
-					<strong>Your Answer:</strong>
-					{item.answer}
-				</li>
-			{/each}
-		</ul>
+		<Card class="min-w-full">
+			<P class="mb-4 text-2xl font-bold">Summary</P>
+			<P class="mb-2 text-xl font-bold">Participant Details</P>
+			<P class="mb-2"><strong>Name:</strong> {name}</P>
+			<P class="mb-2"><strong>Phone:</strong> {phone}</P>
+			<P class="mb-4"><strong>Email:</strong> {email}</P>
+			<P class="mb-2 text-xl font-bold">Challenge Details</P>
+			<List>
+				{#each generateSummary() as { question, answer }}
+					<P><strong>Question:</strong> {question}</P>
+					<P class="mb-4"><strong>Answer:</strong> {answer}</P>
+				{/each}
+			</List>
+			<Button class="w-64" on:click={downloadSummaryAsTxt}>Download Summary</Button>
+		</Card>
 	{/if}
 </main>
+
+<Modal title="Terms of Service" bind:open={loginModal} autoclose>
+	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+		Are you sure you want to start now?
+	</p>
+	<svelte:fragment slot="footer">
+		<Button on:click={triggerShowQuestions}>Start Now</Button>
+		<Button color="alternative">Decline</Button>
+	</svelte:fragment>
+</Modal>
 
 <style>
 	.container {
