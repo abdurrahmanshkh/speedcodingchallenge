@@ -116,6 +116,7 @@
 		showSummary = true;
 		clearInterval(interval); // Stop the timer
 		clearTimeout(timer); // Clear the timeout
+		downloadSummaryAsTxt();
 	}
 
 	// Function to generate the summary

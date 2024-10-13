@@ -17,7 +17,7 @@
 	</div>
 </Navbar>
 
-<main class="p-10">
+<main class="bg-[url(background.jpg)] bg-cover bg-center bg-no-repeat px-20 py-14">
 	<slot></slot>
 </main>
 
