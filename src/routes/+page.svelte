@@ -190,38 +190,38 @@ ${item.answer}\n`;
 				</form>
 			</Card>
 			<Card class="col-span-2 min-w-full">
-				<P class="mb-4 text-2xl font-bold">Code Reverse Engineering - Event Rules</P>
+				<P class="mb-4 text-2xl font-bold">Speed Coding Challenge - Event Rules</P>
+
 				<P class="text-xl font-bold">Participation</P>
 				<List class="mb-4">
-					<Li>Login with your registered details before the event starts.</Li>
-					<Li>Ensure accurate login information to avoid disqualification.</Li>
+					<Li>Log in with your registered details before the challenge begins.</Li>
+					<Li>Ensure correct login credentials to avoid disqualification.</Li>
 				</List>
 
 				<P class="text-xl font-bold">Event Structure</P>
 				<List class="mb-4">
-					<Li>3 rounds with increasing difficulty.</Li>
-					<Li>Code snippets available in Python and Java.</Li>
-					<Li>Identify the algorithm or function within the time limit.</Li>
+					<Li>A single coding round with multiple random coding problems.</Li>
+					<Li>Questions range from beginner to advanced levels.</Li>
+					<Li>You must complete as many problems as possible within the time limit.</Li>
 				</List>
 
-				<P class="text-xl font-bold">Time Limits</P>
+				<P class="text-xl font-bold">Time Limit</P>
 				<List class="mb-4">
-					<Li><strong>Round 1:</strong> 10 minutes</Li>
-					<Li><strong>Round 2:</strong> 15 minutes</Li>
-					<Li><strong>Round 3:</strong> 20 minutes</Li>
+					<Li><strong>Total Time:</strong> 30 minutes</Li>
+					<Li>Participants can track remaining time during the challenge.</Li>
 				</List>
 
 				<P class="text-xl font-bold">Submission</P>
 				<List class="mb-4">
-					<Li>Enter your answer in the input box before time runs out.</Li>
-					<Li>Proceed to the next round only if you submit a correct answer.</Li>
-					<Li>No skipping rounds; incomplete submissions result in elimination.</Li>
+					<Li>Submit your solutions for each problem before the timer ends.</Li>
+					<Li>Only correctly submitted answers will be evaluated.</Li>
+					<Li>No second attempts once time is up or the challenge is terminated early.</Li>
 				</List>
 
 				<P class="text-xl font-bold">Winner Announcement</P>
-				<List class="">
-					<Li>Winners will be announced at the end of the event.</Li>
-					<Li>Organizer decisions are final.</Li>
+				<List>
+					<Li>Winners will be announced based on the total number of points scored.</Li>
+					<Li>Organizer decisions are final and binding.</Li>
 				</List>
 			</Card>
 		</div>
