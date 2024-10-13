@@ -76,6 +76,7 @@
 			timeRemaining--;
 			if (timeRemaining <= 0) {
 				clearInterval(interval);
+				terminateProgram(); // Automatically call terminate when time is up
 			}
 		}, 1000);
 
@@ -89,10 +90,26 @@
 		); // 30 minutes in milliseconds
 	}
 
-	//function to terminate program and show summary before timeout
+	// Function to terminate the program and show the summary before timeout
 	function terminateProgram() {
 		showQuestions = false;
 		showSummary = true;
+		clearInterval(interval); // Stop the timer
+		clearTimeout(timer); // Clear the timeout
+	}
+
+	// Function to generate the summary
+	function generateSummary() {
+		let summary = [];
+		for (let i = 0; i < questions.length; i++) {
+			if (answers[i].length > 0) {
+				summary.push({
+					question: questions[i],
+					answer: answers[i]
+				});
+			}
+		}
+		return summary;
 	}
 </script>
 
@@ -139,7 +156,18 @@
 	{/if}
 
 	{#if showSummary}
-		<p>The summary is displayed.</p>
+		<h2 class="mt-4 text-xl font-bold">Summary</h2>
+		<p>Time Taken: {30 - Math.floor(timeRemaining / 60)} minutes</p>
+		<ul>
+			{#each generateSummary() as item}
+				<li>
+					<strong>Question:</strong>
+					{item.question} <br />
+					<strong>Your Answer:</strong>
+					{item.answer}
+				</li>
+			{/each}
+		</ul>
 	{/if}
 </main>
 
