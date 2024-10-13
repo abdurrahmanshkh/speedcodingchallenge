@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import { Navbar, NavBrand } from 'flowbite-svelte';
+	import { Navbar } from 'flowbite-svelte';
 	import { Footer, FooterCopyright } from 'flowbite-svelte';
 </script>
 
@@ -22,5 +22,5 @@
 </main>
 
 <Footer class="border-2 p-4">
-	<FooterCopyright href="https://abdurrahmanshkh.pages.dev/" by="created by Abdur Rehman Shaikh." />
+	<FooterCopyright by="created by Abdur Rehman Shaikh." />
 </Footer>

@@ -45,9 +45,6 @@
 
 	// Function to move to the next problem statement
 	function nextQuestion() {
-		// Save current answer before moving to the next question
-		saveAnswer();
-
 		// Add the current question index to the shown questions
 		shownQuestions.push(currentIndex);
 
@@ -64,14 +61,6 @@
 		// Update the current question index and the current question
 		currentIndex = randomIndex;
 		currentQuestion = questions[currentIndex];
-	}
-
-	// Function to save the answer input for the current question
-	function saveAnswer() {
-		const input = document.querySelector('#answer-input');
-		if (input) {
-			answers[currentIndex] = input.value; // Save answer to the respective index
-		}
 	}
 
 	let showQuestions = false;
@@ -99,15 +88,6 @@
 				terminateProgram(); // Automatically call terminate when time is up
 			}
 		}, 1000);
-
-		// Set a timeout to hide questions and show summary after 30 minutes
-		timer = setTimeout(
-			() => {
-				showQuestions = false;
-				showSummary = true;
-			},
-			30 * 60 * 1000
-		); // 30 minutes in milliseconds
 	}
 
 	// Function to terminate the program and show the summary before timeout
@@ -271,14 +251,13 @@ ${item.answer}\n`;
 			<P class="mb-2"><strong>Name:</strong> {name}</P>
 			<P class="mb-2"><strong>Phone:</strong> {phone}</P>
 			<P class="mb-4"><strong>Email:</strong> {email}</P>
-			<P class="mb-2 text-xl font-bold">Challenge Details</P>
+			<P class="text-xl font-bold">Challenge Details</P>
 			<List>
 				{#each generateSummary() as { question, answer }}
-					<P><strong>Question:</strong> {question}</P>
-					<P class="mb-4"><strong>Answer:</strong> {answer}</P>
+					<P class="mt-2"><strong>Question:</strong> {question}</P>
+					<P><strong>Answer:</strong> {answer}</P>
 				{/each}
 			</List>
-			<Button class="w-64" on:click={downloadSummaryAsTxt}>Download Summary</Button>
 		</Card>
 	{/if}
 </main>
